@@ -1,0 +1,28 @@
+FROM kaldiasr/kaldi:latest
+
+RUN apt-get install -y tree ruby gawk dos2unix locales locales-all openjdk-8-jdk openjdk-8-jre
+
+ENV ROOT_PATH /root/fb-gitlab/fb-nlp/
+
+RUN wget https://github.com/busyloop/lolcat/archive/master.zip
+RUN unzip master.zip
+RUN cd lolcat-master/bin
+RUN gem install lolcat
+
+RUN mkdir -p $ROOT_PATH 
+WORKDIR $ROOT_PATH
+
+# RUN git clone https://gitlab.com/fb-asr/fb-am-tutorial/kaldi-am-train 
+# RUN git clone https://gitlab.com/fb-nlp/nlp-generator 
+
+RUN git clone https://gitlab.com/johnidouglas/kaldi-am-train
+
+ENV LC_ALL pt_BR.UTF-8
+ENV LANG pt_BR.UTF-8
+ENV LANGUAGE pt_BR.UTF-8
+
+COPY train.sh . 
+
+RUN ["chmod", "+x", "train.sh"]
+
+CMD "./train.sh"
