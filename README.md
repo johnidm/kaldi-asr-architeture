@@ -1,32 +1,42 @@
-# Kaldi ASR Architeture Proposital
+# Kaldi ASR Architeture Proposal
 
-In this repo I will sugerirri uma estrutura de treino e consumo de uma serviço de ASR. Of course this proposta should migrate for another Machine Leaning project desde de que you have a train process and consume service.
+This repository contains a proposal for a speech recognition solution based on [Kaldi ASR](https://kaldi-asr.org/).
 
-The key points 
-- The train process and the consumer service should be  in Docker contaiier.
-- Easy to execute and cusome resources, just execute a Docker run.
-- All resource, including train files and consumer models should be avaliable in URLs or inside the Docker image.
+There are two main parts involved:
 
-O processo de desenvolvimento esta divido em duas parte, train and api.
+- Model training: the file `Dockerfile.train` includes the steps for training a model.
+- Server API: the file `Dockerfile.api` sets up a REST API for consuming a trained model.
+
+Benefits:
+
+- Training a new model is simple.
+- Consuming a trained model via a REST API is also simple.
+- All artifacts are produced using [Docker](https://www.docker.com/) files.
 
 How to train a model:
+
 ```
 docker build -f Dockerfile.train -t iara-train/latest .
 docker run -v $PWD/iara-model:/iara-model --rm -it iara-train/latest
 ```
 
-How o use a model
+> The training process may take a long time.
+
+How to consume a model:
+
 ```
 docker build -f Dockerfile.api -t iara-api/latest .
 docker run --rm -it iara-api/latest
 ```
 
-If you want to learn more about ASR, I recommend [this course](https://www.edx.org/course/speech-recognition-systems-2).
+> The transcription endpoint is avaliable at http://localhost:5000/transcribe.
 
-Don't forget to vist [Kaldi ASR documentation](https://kaldi-asr.org/doc/)
+Don't forget to visit the [Kaldi ASR documentation](https://kaldi-asr.org/doc/).
 
-The [alphacep git repo](https://github.com/alphacep) tem vários projeto interessantes project envolta do Kaldi ASR specialment o [Vosk API](https://github.com/alphacep/vosk-api)
+The [alphacep git repo](https://github.com/alphacep) contains several interesting projects involving Kaldi ASR. 
 
-The [FalaBrasil scripts for Kaldi](https://gitlab.com/fb-asr/fb-am-tutorial/kaldi-am-train) is set of scripts to create a model for Kaldi ASR for portuguese Brazil.
+The [FalaBrasil scripts for Kaldi](https://gitlab.com/fb-asr/fb-am-tutorial/kaldi-am-train) is a set of scripts to help creating a Kaldi ASR model for Brazilian Portuguese.
 
-I hope this structure helps you a lot!  Have a great day and a great week!
+Feel free to make suggestions or contributions to the project.
+
+I hope these ideias can be helpful!
