@@ -6,8 +6,8 @@ RUN mkdir -p $APP_DIR
 
 WORKDIR $APP_DIR
 
-COPY alphacep-model/ models/alphacep
-COPY iara-model/ models/iara
+COPY model/ model/
 
-COPY audio.wav .
-COPY api.py .
+COPY server.py .
+
+CMD [ "python3", "./server.py" ]

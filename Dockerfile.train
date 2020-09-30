@@ -12,10 +12,8 @@ RUN gem install lolcat
 RUN mkdir -p $ROOT_PATH 
 WORKDIR $ROOT_PATH
 
-# RUN git clone https://gitlab.com/fb-asr/fb-am-tutorial/kaldi-am-train 
-# RUN git clone https://gitlab.com/fb-nlp/nlp-generator 
-
-RUN git clone https://gitlab.com/johnidouglas/kaldi-am-train
+RUN git clone https://gitlab.com/fb-asr/fb-am-tutorial/kaldi-am-train 
+# RUN git clone https://gitlab.com/johnidouglas/kaldi-am-train
 
 ENV LC_ALL pt_BR.UTF-8
 ENV LANG pt_BR.UTF-8

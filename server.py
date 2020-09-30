@@ -1,11 +1,10 @@
-# from functools import wraps
-# from datetime import datetime
+from datetime import datetime
 import os
 
 import json
 
-# from vosk import Model, KaldiRecognizer
-# import sys
+from vosk import Model, KaldiRecognizer
+
 import urllib.request
 import uuid
 
@@ -13,13 +12,13 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from io import BytesIO
 
 
-# MODEL_PATH = ""
+MODEL_PATH = "model/"
 
 AUDIO_PATH = "audio/"
 
-# SAMPLE_FREQUENCY = 16000
+SAMPLE_FREQUENCY = 16000
 
-# model = Model(MODEL_PATH)
+model = Model(MODEL_PATH)
 
 
 def download_temp_file(url, dir_name):
@@ -38,47 +37,45 @@ def remove_temp_file(filename):
 
 def post_transcribe(audio_url):
 
-    # recognizer = KaldiRecognizer(model, SAMPLE_FREQUENCY)
+    recognizer = KaldiRecognizer(model, SAMPLE_FREQUENCY)
 
-    # elapsed_time = None
-    # transcript = []
+    elapsed_time = None
+    transcript = []
 
     audio_file = download_temp_file(audio_url, AUDIO_PATH)
 
-    # with open(audio_file, "rb") as f:
-    #     start_time = datetime.now()
+    with open(audio_file, "rb") as f:
+        start_time = datetime.now()
 
-    #     f.read(44)  # skip header
+        f.read(44)  # skip header
 
-    #     while True:
-    #         data = f.read(2000)
-    #         if len(data) == 0:
-    #             break
+        while True:
+            data = f.read(2000)
+            if len(data) == 0:
+                break
 
-    #         if recognizer.AcceptWaveform(data):
-    #             words = json.loads(recognizer.Result())
-    #             transcript.append(words)
+            if recognizer.AcceptWaveform(data):
+                words = json.loads(recognizer.Result())
+                transcript.append(words)
 
-    #     words = json.loads(recognizer.FinalResult())
-    #     transcript.append(words)
+        words = json.loads(recognizer.FinalResult())
+        transcript.append(words)
 
-    #     end_time = datetime.now()
-    #     elapsed_time = end_time - start_time
+        end_time = datetime.now()
+        elapsed_time = end_time - start_time
 
     remove_temp_file(audio_file)
 
-    # transcript = [t for t in transcript if len(t["result"]) != 0]
+    transcript = [t for t in transcript if len(t["result"]) != 0]
 
-    # phrases = [t["text"] for t in transcript]
+    phrases = [t["text"] for t in transcript]
 
-    # transcription = " ".join(phrases)
+    transcription = " ".join(phrases)
 
-    # return {
-    #     "elapsed_time": str(elapsed_time),
-    #     "transcription": transcription,
-    # }
-
-    return audio_file
+    return {
+        "elapsed_time": str(elapsed_time),
+        "transcription": transcription,
+    }
 
 
 def dict_2_bytes(data):
@@ -119,7 +116,7 @@ class TranscriptionHTTPRequestHandler(BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    HOST = "127.0.0.1"
+    HOST = "0.0.0.0"
     PORT = 8000
 
     server = HTTPServer((HOST, PORT), TranscriptionHTTPRequestHandler)
