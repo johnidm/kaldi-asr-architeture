@@ -31,7 +31,7 @@ docker run --rm -p 8000:8000 -it iara-api/latest
 
 > The transcription endpoint is avaliable at http://localhost:8000/transcribe.
 
-Sample Transcript Request
+Sample transcript request
 
 ```
 curl -i -X POST \
@@ -41,6 +41,15 @@ curl -i -X POST \
   "url": "https://raw.githubusercontent.com/johnidm/kaldi-asr-architeture/master/audio.wav" 
 }' \
  'http://127.0.0.1:8000/transcribe'
+```
+
+Sample transcript response
+
+```
+{
+"elapsed_time": "0:00:24.651320",
+"transcription": "esta é a da república federativa do brasil triangular las representantes da empresa brasileira é o em assembleia nacional constituinte eleita instituir o estado democrático ..."
+}
 ```
 
 ---
