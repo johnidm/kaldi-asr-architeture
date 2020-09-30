@@ -17,16 +17,16 @@ How to train a model:
 
 ```
 docker build -f Dockerfile.train -t iara-train/latest .
-docker run -v $PWD/iara-model:/iara-model --rm -it iara-train/latest
+docker run -v $PWD/model:/model --rm -it iara-train/latest
 ```
 
-> The training process may take a long time.
+> The training process may take a long time, about 12 hours.
 
 How to consume a model:
 
 ```
 docker build -f Dockerfile.api -t iara-api/latest .
-docker run --rm -it iara-api/latest
+docker run --rm -p 8000:8000 -it iara-api/latest
 ```
 
 > The transcription endpoint is avaliable at http://localhost:5000/transcribe.
