@@ -29,7 +29,21 @@ docker build -f Dockerfile.api -t iara-api/latest .
 docker run --rm -p 8000:8000 -it iara-api/latest
 ```
 
-> The transcription endpoint is avaliable at http://localhost:5000/transcribe.
+> The transcription endpoint is avaliable at http://localhost:8000/transcribe.
+
+Sample Transcript Request
+
+```
+curl -i -X POST \
+   -H "Content-Type:application/json" \
+   -d \
+'{
+  "url": "https://raw.githubusercontent.com/johnidm/kaldi-asr-architeture/master/audio.wav" 
+}' \
+ 'http://127.0.0.1:8000/transcribe'
+```
+
+---
 
 Don't forget to visit the [Kaldi ASR documentation](https://kaldi-asr.org/doc/).
 
