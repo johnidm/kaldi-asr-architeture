@@ -20,13 +20,9 @@ docker build -f Dockerfile.train -t iara-train/latest .
 docker run -v $PWD/model:/model --rm -it iara-train/latest
 ```
 
-<<<<<<< HEAD
-> The training process may take a long time.
+> The training process may take a long time, about 12 hours.
 
 How to consume a model:
-=======
-How o use a model
->>>>>>> Refatoring API rest
 
 ```
 docker build -f Dockerfile.api -t iara-api/latest .
